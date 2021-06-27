@@ -6,7 +6,7 @@ use std::process::Command;
 
 // change it
 static PATH: &str = "/home/USER/.local/share/notes"; // all notes will locate in this folder
-static EDITOR: &str = "vim";
+static EDITOR: &str = "/bin/vim";
 //
 
 fn usage() {
@@ -154,7 +154,7 @@ fn read_all_notes() {
 fn write_note(note_name: &str) {
     let path = Path::new(PATH).join(Path::file_name(Path::new(note_name)).unwrap());
     let path = get_note_path(note_name).unwrap_or(path);
-    let mut editor = Command::new(EDITOR).arg(path).spawn().unwrap();
+    let mut editor = Command::new(EDITOR).arg(path).spawn().expect("Cannot open editor, please change the EDITOR var in source code");
     editor.wait().unwrap();
 }
 
